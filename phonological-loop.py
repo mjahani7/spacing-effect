@@ -1,11 +1,12 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
-def phonologicalLoop():
+def phonologicalLoop(dRate=0.8):
   nReps = 1000      # number of replications
 
   listLength = 5    # number of list items
   initAct = 1       # initial activation of items
-  dRate = 0.8       # decay rate (per second)
+#  dRate = 0.8       # decay rate (per second)
   delay = 5         # retention interval (seconds)
   minAct = 0        # minimum activation for recall
 
@@ -48,8 +49,6 @@ def phonologicalLoop():
     i += 1
 
   # plot results
-  import matplotlib.pyplot as plt
-
   plt.scatter(rRange, np.divide(pCor, nReps))
   plt.xlim([0, 4.5])
   plt.ylim([0, 1])
@@ -58,3 +57,5 @@ def phonologicalLoop():
   plt.show()
 
   return
+
+phonologicalLoop()
