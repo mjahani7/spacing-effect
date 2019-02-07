@@ -24,40 +24,32 @@ def wrapper4fmin(pArray, data):
     return math.sqrt(sd.sum() / sd.size)
   return optimize.minimize(bof, pArray)
 
-def estimate():
-  nDataPts = 20
-  rho = 0.8
-  intercept = 0
-
-  # generate simulated data
-  data = np.zeros((nDataPts, 2))
-  data[:, 1] = np.random.randn(nDataPts)
-  # why?
-  data[:, 0] = np.random.randn(nDataPts) * math.sqrt(1 - (rho ** 2)) \
-               + (data[:, 1] * rho) + intercept
-
-  # conventional regression analysis
-  # parameter computation
-  bigX = np.zeros((nDataPts, 2))
-  bigX[:, 0] = np.ones(nDataPts)
-  bigX[:, 1] = data[:, 1]
-  y = np.zeros((nDataPts, 1))
-  y[:, 0] = data[:, 0]
-  b = np.linalg.lstsq(bigX,y)
-  print('b =')
-  print(b[0])
-
+def estimate(data):
   # parameter estimation
   startParms = np.array([-1, 0.2]) # starting values for slope and intercept
   res = wrapper4fmin(startParms, data)
   print('x = ')
   print(res.x)
   print('fVal = ', res.fun)
+  
+def generate_data():
+  nDataPts = 20
+  rho = 0.8
+  intercept = 0
+  
+  data = np.zeros((nDataPts, 2))
+  data[:, 1] = np.random.randn(nDataPts)
+  # why?
+  data[:, 0] = np.random.randn(nDataPts) * math.sqrt(1 - (rho ** 2)) \
+               + (data[:, 1] * rho) + intercept
+  return(data)
 
 ###############################################################################
 
 def main():
-  estimate()
+  # generate simulated data
+  data = generate_data()
+  estimate(data)
 
 if __name__ == '__main__':
   main()
