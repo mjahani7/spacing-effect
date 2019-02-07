@@ -16,7 +16,6 @@ def base(t, current_time, p=0.8, d=0.18):
     B = 0.                             # initial base-level strength
     delta_B = np.array([0.] * len(t))  # vector for storing increments
     delta_B[0] = p * (1-B)             # initial increment
-    t_last = t[0]
     
     # calculate base-level prior to each study and new increment
     #import pdb; pdb.set_trace()
@@ -25,7 +24,6 @@ def base(t, current_time, p=0.8, d=0.18):
             decayed_delta_B = delta_B[0:i] * (1+t[i]-t[0:i]) ** (-d)
             B = sum(decayed_delta_B)
             delta_B[i] = (1-B) * p
-            t_last = t[i]
         
     # calculate base-level at time of testing
     idx = t <= current_time
